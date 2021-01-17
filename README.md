@@ -25,10 +25,10 @@ You can start editing the page by modifying `pages/index.js`. The page auto-upda
 
 To run the backend server, navigate to server and download all the required dependencies :
 
-```pip
-install -r
+```bash
+pip install -r
 requirements.txt
 ```
 
 Then navigate to the src and run main.py on port 5000
-*Note : need personal Twilio Account to connect the server webhook to (API Keys and Account Credentials not provided)
+\* Note : need personal Twilio Account to connect the server webhook to (API Keys and Account Credentials not provided)
