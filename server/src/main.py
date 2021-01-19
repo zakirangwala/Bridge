@@ -19,11 +19,21 @@ account_sid = config.account_sid
 auth_token = config.auth_token
 client = Client(account_sid, auth_token)
 
+# Send Message
+def send_message(reply, number):
+    message = client.messages.create(
+        from_=config.Twilio_number,
+        body= reply,
+        to=number
+    )
+
 # Reply to SMS
 @app.route("/reply", methods=['GET', 'POST'])
 @cross_origin()
 def reply():
     body = request.values.get('Body', None)
+    number = request.values.get('From', None)
+    print(number)
     command = base_command.Command(body).command
     return_text = ''
     if command == "help":
@@ -45,12 +55,11 @@ def reply():
         response = movies.Movie(body)
         return_text = response.exec()
 
-    res = MessagingResponse()
     if return_text == '':
-        res.message("please type !help for response")
+        send_message("please type !help for response", number)
     else:
-        res.message(return_text)
-    return str(res)
+        send_message(return_text, number)
+    return str(return_text)
 
 
 # Main Driver
