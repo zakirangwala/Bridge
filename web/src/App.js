@@ -1,4 +1,6 @@
 import React from "react";
+import Registration_Form from "./Registration_Form.js"
+import BridgePNG from "./assets/bridge.png"
 import "./App.css";
 
 class App extends React.Component {
@@ -8,8 +10,8 @@ class App extends React.Component {
         <div className="is-preload">
           <div id="wrapper">
             <header id="header">
-              <div className="logo">
-                <span className="icon fa-gem"></span>
+              <div className="logo-bridge">
+                <img src= {BridgePNG} />
               </div>
               <div className="content">
                 <div className="inner">
@@ -31,32 +33,7 @@ class App extends React.Component {
               <div id="main">
                 {/* <article id="contact"> */}
                 <h2 className="major">Register</h2>
-                <form method="post" action="#">
-                  <div className="fields">
-                    <div className="field half">
-                      <label for="name">Name</label>
-                      <input type="text" name="name" id="name" placeholder="John Doe"/>
-                    </div>
-                    <div className="field half">
-                      <label for="email">Email</label>
-                      <input type="text" name="email" id="email" placeholder="johndoe@gmail.com"/>
-                    </div>
-                    <div className="field half">
-                      <label for="phone">Phone Number</label>
-                      <input type="text" name="phone" id="phone" placeholder="+19126472134"/>
-                    </div>
-                  </div>
-                  <div className="buttons_react">
-                    <ul className="actions">
-                      <li>
-                        <input type="submit" value="Send Message" className="primary" />
-                      </li>
-                      <li>
-                        <input type="reset" value="Reset" />
-                      </li>
-                    </ul>
-                  </div>
-                </form>
+                <Registration_Form />
                 <ul className="icons">
                   <li>
                     <a href="#" className="icon brands fa-twitter">
