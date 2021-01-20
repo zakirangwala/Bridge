@@ -6,25 +6,33 @@ const Registration_Form = () => {
       <form method="post" action="#">
         <div className="fields">
           <div className="field half">
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" placeholder="John Doe" />
-          </div>
-          <div className="field half">
-            <label for="email">Email</label>
+            <label for="name">*Name</label>
             <input
               type="text"
-              name="email"
-              id="email"
-              placeholder="johndoe@gmail.com"
+              name="name"
+              id="name"
+              placeholder="John Doe"
+              required
             />
           </div>
           <div className="field half">
-            <label for="phone">Phone Number</label>
+            <label for="email">*Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="johndoe@gmail.com"
+              required
+            />
+          </div>
+          <div className="field half">
+            <label for="phone">*Phone Number</label>
             <input
               type="text"
               name="phone"
               id="phone"
               placeholder="+19126472134"
+              required
             />
           </div>
         </div>
