@@ -1,7 +1,7 @@
 # Bridge
 
 <p align="center">
-  <img width="500" height="500" src="web/public/bridge.png" alt="Logo">
+  <img width="500" height="500" src="web/public/favicon.png" alt="Logo">
 </p>
 
 By Alexander Cai, Zaki Rangwala, and Ayden Heal for Hack the North 2021.
