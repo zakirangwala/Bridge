@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+import { db } from "./firebase";
 
 const Registration_Form = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
+
+  const clearForm = () => {
+    setName("");
+    setEmail("");
+    setNumber("");
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    db.collection("users").add({
+      fullname: name,
+      email: email,
+      number: number,
+    });
+    clearForm();
+  };
+
   return (
     <div>
-      <form method="post" action="#">
+      <form>
         <div className="fields">
           <div className="field half">
             <label for="name">*Name</label>
@@ -12,6 +33,8 @@ const Registration_Form = () => {
               name="name"
               id="name"
               placeholder="John Doe"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
@@ -22,6 +45,8 @@ const Registration_Form = () => {
               name="email"
               id="email"
               placeholder="johndoe@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -32,6 +57,8 @@ const Registration_Form = () => {
               name="phone"
               id="phone"
               placeholder="+19126472134"
+              value={number}
+              onChange={(e) => setNumber(e.target.value)}
               required
             />
           </div>
@@ -39,10 +66,15 @@ const Registration_Form = () => {
         <div className="buttons_react">
           <ul className="actions">
             <li>
-              <input type="submit" value="Send Message" className="primary" />
+              <input
+                type="submit"
+                value="Send Message"
+                className="primary"
+                onClick={submitForm}
+              />
             </li>
             <li>
-              <input type="reset" value="Reset" />
+              <input type="reset" value="Reset" onClick={clearForm} />
             </li>
           </ul>
         </div>
