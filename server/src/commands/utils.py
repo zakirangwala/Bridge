@@ -5,14 +5,13 @@ currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 import config
-import smtplib
-from pygoogletranslation import Translator
-from bs4 import BeautifulSoup
-from googlesearch import search
-import requests
-import json
 import imdb
-
+import json
+import requests
+from googlesearch import search
+from bs4 import BeautifulSoup
+from pygoogletranslation import Translator
+import smtplib
 
 
 # Configure Browser Header and URL
@@ -108,8 +107,85 @@ def translate(word, language):
             "text") + 5:translation.find(', p')]
         return(f'{word} in {values[location]} => {translation}')
 
+# Scrape IMDB
+
+
+def find_imdb(query):
+    try:
+        query += ' IMDB'
+        URL = google_query(query)[0]
+        page = requests.get(URL, headers=headers)
+        html_content = page.text
+        soup = BeautifulSoup(html_content, 'lxml')
+        title = soup.title.string
+        title = title[0:-7]
+        return title
+    except Exception as e:
+        return 'Movie could not be found'
+
+# Scrape Rotten Tomatoes
+
+
+def rotten_tomatoes_score(query):
+    try:
+        query += query + " Rotten Tomatoes"
+        URL = google_query(query)[0]
+        page = requests.get(URL, headers=headers)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        res = soup.find(class_='mop-ratings-wrap__percentage').get_text()
+        check = res.split(' ')
+        for i in check:
+            if len(i) > 1:
+                return i
+    except Exception as e:
+        return '-1  '
+
+# def find_movie(movie):
+#     x = requests.get(f'https://assistant-beta-app.herokuapp.com/movie/{movie}')
+#     result = x.json()
+#     return result
+
 # Find Movie
-def find_movie(movie):
-    x = requests.get(f'https://assistant-beta-app.herokuapp.com/movie/{movie}')
-    result = x.json()
-    return result
+def find_movie(word):
+    moviesDB = imdb.IMDb()
+    movies = moviesDB.search_movie(find_imdb(word))
+    id = movies[0].getID()
+    movie = moviesDB.get_movie(id)
+    score = str(rotten_tomatoes_score(find_imdb(word)))
+    score = float(score[:-2])
+    rating = float(movie['rating'])
+    title = str(movie['title'])
+    year = movie['year']
+    directors = movie['directors']
+    casting = []
+    if len(movie['cast']) != 1:
+        for i in range(8):
+            casting.append(str(movie['cast'][i]))
+    else:
+        casting = str(movie['cast'][0])
+    if len(directors) != 1:
+        d = []
+        d.append((f'{str(directors[0])}'))
+        del directors[0]
+        for i in range(len(directors)):
+            if i != len(directors) - 1:
+                d.append((f'{str(directors[i])}'))
+            else:
+                d.append((str(directors[i])))
+    else:
+        d = (f'{str(directors[0])}')
+    keys = list(movie.keys())
+    if 'plot outline' not in keys:
+        synopsis = str(movie['plot'][0])
+    else:
+        synopsis = str(movie['plot outline'])
+    x = {
+        "Title": title,
+        "Year": year,
+        "IMDB": rating,
+        "Tomatometer": score,
+        "Cast": casting,
+        "Directors": d,
+        "Plot": synopsis
+    }
+    return x
