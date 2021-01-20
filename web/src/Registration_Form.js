@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import firebase from "firebase";
 import { db } from "./firebase";
 import { v4 as uuidv4 } from "uuid";
+import "./Registration_Form.css";
 
 const Registration_Form = () => {
   const [name, setName] = useState("");
@@ -28,9 +29,15 @@ const Registration_Form = () => {
         </div>
       );
     } else if (state === "Approved") {
-      return <p>Approved</p>;
+      return (
+        <div className="approved">
+          <h3>Approved</h3>
+        </div>
+      );
     } else if (state === "Error") {
-      return <p>Error</p>;
+      <div className="Error">
+        <h3>Error</h3>
+      </div>;
     } else {
       return null;
     }

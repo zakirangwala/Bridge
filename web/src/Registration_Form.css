@@ -1,0 +1,13 @@
+.approved > h3{
+    position: absolute;
+    top : 220px;
+    right : 200px;
+    color : green;
+}
+
+.error > h3 {
+    position: absolute;
+    top : 220px;
+    right : 200px;
+    color : red;
+}
