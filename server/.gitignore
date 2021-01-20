@@ -3,7 +3,6 @@ env/
 .google-cookie
 node_modules
 .next/
-config.py
 .google-cookie
 __pycache__
 .venv

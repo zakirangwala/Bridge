@@ -1,5 +1,5 @@
-from commands.base_command import Command
-from commands.utils import find_movie
+from base_command import Command
+from utils import find_movie
 
 
 class Movie(Command):
