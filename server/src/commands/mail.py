@@ -4,6 +4,7 @@ from commands.utils import send_mail
 
 class Mail(Command):
     def exec(self):
+        print("Request:", self.args)
         """Command for emailing a user.
 
         Format:
