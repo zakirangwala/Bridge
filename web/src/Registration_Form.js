@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import firebase from "firebase";
 import { db } from "./firebase";
+import { v4 as uuidv4 } from "uuid";
 
 const Registration_Form = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
   const [verification, setVerification] = useState("");
-  const [status, setStatus] = useState("");
   const [state, setState] = useState("");
-  const [docId, setDocId] = useState("123");
+  const [docId, setDocId] = useState(uuidv4().toString());
 
   const verify = () => {
     if (state === "checking") {
@@ -40,16 +40,16 @@ const Registration_Form = () => {
     setName("");
     setEmail("");
     setNumber("");
+    setState("");
   };
 
   const submitForm = (e) => {
     if (state === "checking") {
-      setStatus("Verified");
       e.preventDefault();
       db.collection("users")
         .doc(docId)
         .set({
-          status: status,
+          status: "Verified",
           fullname: name,
           email: email,
           number: number,
@@ -63,10 +63,9 @@ const Registration_Form = () => {
         });
     } else {
       e.preventDefault();
-      setStatus("Not Verified");
       db.collection("users")
         .add({
-          status: status,
+          status: "Not Verified",
           fullname: name,
           email: email,
           number: number,
