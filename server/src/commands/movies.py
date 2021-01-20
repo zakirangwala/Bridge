@@ -3,23 +3,17 @@ from commands.utils import find_movie
 
 
 class Movie(Command):
-    help_msg="!movie;[title;][rating;][score;][cast;][directors;][synopsis]"
+    help_msg = "!movie;[title;][rating;][score;][cast;][directors;][synopsis]"
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def exec(self):
-        print("ARGS", self.args)
-
+        print("Request:", self.args)
         if len(self.args) == 0:
             return "Type !help to get information about Bridge."
-
         data = find_movie(self.args[0])
-
-        print(data)
-
-        return_message=''
-
+        return_message = ''
         for arg in self.args[1:]:
             arg = arg.lower()
             if arg == 'title':
@@ -29,14 +23,13 @@ class Movie(Command):
             elif arg == 'rating':
                 return_message += "IMDB rating: " + str(data["IMDB"]) + "\n"
             elif arg == 'score':
-                return_message += "Tomatometer score: " + str(data["Tomatometer"]) + "\n"
+                return_message += "Tomatometer score: " + \
+                    str(data["Tomatometer"]) + "\n"
             elif arg == 'cast':
                 return_message += "Cast: " + ', '.join(data["Cast"]) + "\n"
             elif arg == 'director':
-                return_message += "Director(s): " + data["Directors"] + "\n"
+                return_message += "Director(s): " + \
+                    str(data["Directors"]) + "\n"
             elif arg == 'synopsis':
                 return_message += "Synopsis: " + data["Plot"] + "\n"
-
-        print("RETURN MESSAGE:", return_message)
-
         return return_message

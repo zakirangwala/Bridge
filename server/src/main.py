@@ -33,9 +33,10 @@ def send_message(reply, number):
 def reply():
     body = request.values.get('Body', None)
     number = request.values.get('From', None)
-    print(number)
+    print("Sender Number: " + number)
     command = base_command.Command(body).command
     return_text = ''
+    print("Command: " + command)
     if command == "help":
         response = helps.Help(body)
         return_text = response.exec()
@@ -58,6 +59,7 @@ def reply():
     if return_text == '':
         send_message("please type !help for response", number)
     else:
+        print("RETURN MESSAGE:", return_text)
         send_message(return_text, number)
     return str(return_text)
 

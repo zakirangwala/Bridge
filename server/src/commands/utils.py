@@ -1,10 +1,4 @@
 # Import Libraries
-import os
-import sys
-currentdir = os.path.dirname(os.path.realpath(__file__))
-parentdir = os.path.dirname(currentdir)
-sys.path.append(parentdir)
-import config
 import imdb
 import json
 import requests
@@ -12,7 +6,12 @@ from googlesearch import search
 from bs4 import BeautifulSoup
 from pygoogletranslation import Translator
 import smtplib
-
+import config
+import os
+import sys
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.append(parentdir)
 
 # Configure Browser Header and URL
 headers = {
@@ -140,12 +139,9 @@ def rotten_tomatoes_score(query):
     except Exception as e:
         return '-1  '
 
-# def find_movie(movie):
-#     x = requests.get(f'https://assistant-beta-app.herokuapp.com/movie/{movie}')
-#     result = x.json()
-#     return result
-
 # Find Movie
+
+
 def find_movie(word):
     moviesDB = imdb.IMDb()
     movies = moviesDB.search_movie(find_imdb(word))
@@ -153,7 +149,10 @@ def find_movie(word):
     movie = moviesDB.get_movie(id)
     score = str(rotten_tomatoes_score(find_imdb(word)))
     score = float(score[:-2])
-    rating = float(movie['rating'])
+    try:
+        rating = float(movie['rating'])
+    except Exception as e:
+        rating = -1
     title = str(movie['title'])
     year = movie['year']
     directors = movie['directors']
@@ -164,14 +163,15 @@ def find_movie(word):
     else:
         casting = str(movie['cast'][0])
     if len(directors) != 1:
-        d = []
-        d.append((f'{str(directors[0])}'))
-        del directors[0]
+        temp = []
+        temp.append((f'{str(directors[0])}'))
+        del temp[0]
         for i in range(len(directors)):
             if i != len(directors) - 1:
-                d.append((f'{str(directors[i])}'))
+                temp.append((f'{str(directors[i])}'))
             else:
-                d.append((str(directors[i])))
+                temp.append((str(directors[i])))
+        d = ", ".join(temp)
     else:
         d = (f'{str(directors[0])}')
     keys = list(movie.keys())
