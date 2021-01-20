@@ -10,6 +10,7 @@ docx2txt==0.8
 Flask==1.1.2
 Flask-Cors==3.0.10
 google==3.0.0
+gunicorn==20.0.4
 h11==0.9.0
 h2==3.2.0
 hpack==3.0.0
@@ -20,7 +21,6 @@ hyperframe==5.2.0
 idna==2.10
 IMDbPY==2020.9.25
 itsdangerous==1.1.0
-gunicorn==20.0.4
 Jinja2==2.11.2
 joblib==1.0.0
 loguru==0.5.3
