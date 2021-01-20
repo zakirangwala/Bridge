@@ -24,7 +24,7 @@ const Registration_Form = () => {
 
   return (
     <div>
-      <form>
+      <form onSubmit={submitForm}>
         <div className="fields">
           <div className="field half">
             <label for="name">*Name</label>
@@ -68,9 +68,8 @@ const Registration_Form = () => {
             <li>
               <input
                 type="submit"
-                value="Send Message"
+                value="Send Form"
                 className="primary"
-                onClick={submitForm}
               />
             </li>
             <li>
