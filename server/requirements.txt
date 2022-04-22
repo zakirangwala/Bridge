@@ -31,7 +31,7 @@ pycodestyle==2.6.0
 PyExecJS==1.5.1
 pygoogletranslation==2.0.4
 PyJWT==1.7.1
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 pytz==2020.5
 regex==2020.11.13
 requests==2.24.0
